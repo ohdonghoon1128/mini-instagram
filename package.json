@@ -1,0 +1,33 @@
+{
+  "name": "instagram",
+  "version": "1.0.0",
+  "description": "small instagram server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ohdonghoon1128/instagram.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ohdonghoon1128/instagram/issues"
+  },
+  "homepage": "https://github.com/ohdonghoon1128/instagram#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.0.14",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.3",
+    "uglify-es": "^3.3.9"
+  }
+}

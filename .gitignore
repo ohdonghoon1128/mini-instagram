@@ -1,0 +1,8 @@
+#private key and public key
+ssl
+
+#node dependencies
+node_modules
+
+#express environment
+.env
