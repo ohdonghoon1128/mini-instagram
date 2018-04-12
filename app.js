@@ -11,9 +11,9 @@ const passport = require('passport');
 const uglifyEs = require('uglify-es');
 
 //connect to mongodb and register database models
-//require('./app_api/models/db');
+require('./app_api/models/db');
 //register authentication strategy
-//require('./app_api/config/passport');
+require('./app_api/config/passport');
 
 //minify client-side javascript files
 try {
@@ -39,8 +39,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use(passport.initialize());
 
-//const routesApi = require('./app_api/routes/index');
-//app.use('/api', routesApi);
+//api handlers
+const routesApi = require('./app_api/routes/index');
+app.use('/api', routesApi);
 
 //if none of the routes matched, forward to error handler
 app.use((req, res, next) => {
