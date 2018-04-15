@@ -1,0 +1,22 @@
+April, 12, 2018
+    1. install and set up mongodb database on my local computer
+    2. build base functionality of the instagram server on my local computer
+        2.1 mongoose
+            2.1.1 set up mongoose connection
+            2.1.2 register database models
+        2.2 routes
+            2.2.1 add basic routes
+        2.3 controllers
+            2.3.1 set basic controller for each routes
+
+April, 15, 2018
+    1. prepare client-side files(angular, bootstrap, jquery)
+    2. create an instruction.txt that shows how to install this mini-instagram server
+    3. create basic homepage with angularJs
+
+
+
+To do later
+- /app_api/controllers/authentications.js
+    deleteUser must clean all comments and photos that related to the user
+

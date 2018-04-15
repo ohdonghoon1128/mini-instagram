@@ -1,0 +1,22 @@
+required: node.js express.js npm mongodb
+
+
+1. install node.js and npm (go to website and follow the steps)
+2. install mongodb (go to website and follow the steps)
+3. install npm modules (npm install)
+4. download jquery, bootstrap, angular()
+    jquery
+        download https://code.jquery.com/jquery-3.3.1.min.js
+    bootstrap
+        download https://github.com/twbs/bootstrap/releases/download/v3.3.7/bootstrap-3.3.7-dist.zip
+    angular
+        download
+        https://code.angularjs.org/1.6.9/angular.min.js
+        https://code.angularjs.org/1.6.9/angular-route.min.js
+        https://code.angularjs.org/1.6.9/angular-sanitize.min.js
+    angular-ui-bootstrap
+        https://angular-ui.github.io/bootstrap
+        click "Create a Build"
+        check "Modal"
+        click "Download Modules"
+        copy "ui-bootstrap-custom-2.5.0.min.js" and "ui-bootstrap-custom-tpls-2.5.0.min.js" into angular folder
