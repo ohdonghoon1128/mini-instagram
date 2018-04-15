@@ -65,8 +65,8 @@ const https = require('https');
 let options;
 try {
     options = {
-        key: fs.readFileSync(path.join(__dirname, 'ssl', 'instagram.pem')),
-        cert: fs.readFileSync(path.join(__dirname, 'ssl', 'instagram.crt'))
+        key: fs.readFileSync(path.join(__dirname, 'ssl', 'mini-instagram.pem')),
+        cert: fs.readFileSync(path.join(__dirname, 'ssl', 'mini-instagram.crt'))
     };
 } catch(e) {
     console.log(e);
