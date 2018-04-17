@@ -3,14 +3,30 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-    name: {
+    userid: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
         required: true,
         unique: true
+    },
+    followersReqQ: {
+        type: [String]
+    },
+    followersDenyList: {
+        type: [String]
+    },
+    followersAcceptList: {
+        type: [String]
+    },
+    followsReqQ: {
+        type: [String]
+    },
+    following: {
+        type: [String]
     },
     hash: {
         type: String,
@@ -22,23 +38,23 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.methods.validPassword = function(password) {
+userSchema.methods.setPassword = function(password) {
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
 };
 
 userSchema.methods.validPassword = function(password) {
-    return this.hash === crypto.pbkdf2Sync(password, this.slat, 1000, 64, 'sha1').toString('hex');
+    return this.hash === crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
 };
 
-userSchema.methods.validPassword = function(password) {
+userSchema.methods.generateJwt = function() {
     const exp = new Date();
     exp.setHours(exp.getHours() + 1);
 
     return jwt.sign({
-        exp: exp,
-        name: name,
-        email: email
+        exp: exp.getTime(),
+        userid: this.userid,
+        email: this.email
     }, process.env.JWT_SECRET);
 };
 

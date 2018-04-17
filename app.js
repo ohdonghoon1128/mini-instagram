@@ -24,8 +24,8 @@ try {
         fs.readFileSync('public/app_client/registerModal/registerModal.controller.js', 'utf8'),
         fs.readFileSync('public/app_client/common/directives/navigation.directive.js', 'utf8'),
         fs.readFileSync('public/app_client/common/directives/navigation.controller.js', 'utf8'),
-        fs.readFileSync('public/app_client/common/directives/footerGeneric.directive.js', 'utf8')
-        //fs.readFileSync('public/app_client/', 'utf8'),
+        fs.readFileSync('public/app_client/common/directives/footerGeneric.directive.js', 'utf8'),
+        fs.readFileSync('public/app_client/common/services/authentication.service.js', 'utf8')
         //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/', 'utf8'),

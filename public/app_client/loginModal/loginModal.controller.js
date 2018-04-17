@@ -3,8 +3,8 @@
         .module('instagramApp')
         .controller('loginModalCtrl', loginModalCtrl);
 
-    loginModalCtrl.$inject = ['$uibModalInstance'/*, 'authentication'*/];
-    function loginModalCtrl($uibModalInstance/*, authentication*/) {
+    loginModalCtrl.$inject = ['$uibModalInstance', 'authentication'];
+    function loginModalCtrl($uibModalInstance, authentication) {
         const vm = this;
 
         vm.formData = {};
@@ -16,12 +16,11 @@
             if(!vm.formData.userid || !vm.formData.password) {
                 vm.formError = 'userid and password are required!';
                 return false;
-            }/* else {
+            } else {
                 //if userid nad password given, then try to login
                 authentication.login(vm.formData)
                     .then((res) => {
                         //successfully login
-                        authentication.saveToken(res.data.token);
                         $uibModalInstance.close();
                     })
                     .then(null, (res) => {
@@ -31,7 +30,7 @@
                     });
 
                 return false;
-            }*/
+            }
         };
 
         vm.cancel = function() {

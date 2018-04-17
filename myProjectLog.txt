@@ -19,6 +19,9 @@ April, 16, 2018
         1.1 home page show some test images downloaded from server
     2. create login Modal and register Modal
 
+April, 17, 2018
+    1. implemented login, register, edit, profile and delete function in authentication.js
+    2. tested with mongodb. it works fine
 
 To do later
 - /app_api/controllers/authentications.js

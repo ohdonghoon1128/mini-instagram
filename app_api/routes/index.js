@@ -12,6 +12,48 @@ const auth = expressJwt({
 const ctrlComment = require('../controllers/comments');
 const ctrlAuth = require('../controllers/authentications');
 
+/*
+    SUPER_USER: 0,
+    OWNER: 1,
+    FRIENDS: 2,
+    OTHERS: any number other than 0, 1, 2
+*/
+const accessLevel = {
+    SUPER_USER: 0,
+    OWNER: 1,
+    FRIENDS: 2
+};
+/*
+function authLevel(accessRequiredLevel) {
+    return (req, res, next) => {
+        if(accessRequiredLevel === accessLevel.SUPER_USER) {
+        } else if(accessRequiredLevel === accessLevel.OWNER) {
+            User
+                .findOne({userid: req.payload.userid})
+                .exec((err, user) => {
+                    if(err) {
+                        res.status(404).json(err);
+                    }
+                });
+            next();
+        } else if(accessRequiredLevel === accessLevel.FRIENDS) {
+            next();
+        } else {
+            if(req.payload) {
+                req.payload.authorized = true;
+            } else {
+                req.payload = {
+                    authorized = true;
+                };
+            }
+            next();
+        }
+    };
+}
+*/
+
+router.use(auth);
+
 /*ADD authentication middleware later*******************************************************************/
 
 
@@ -44,11 +86,31 @@ router.put('/photos/:photoid/comments/:commentid', ctrlComment.updateOne);
 router.delete('/photos/:photoid/comments/:commentid', ctrlComment.deleteOne);
 
 
+/*
 //authentication handler
 router.post('/auth/register', ctrlAuth.register);
 router.post('/auth/login', ctrlAuth.login);
 router.put('/auth/:userid', ctrlAuth.updateOne);
 router.delete('/auth/:userid', ctrlAuth.deleteOne);
+*/
+
+
+//authentication middleware check, if user has logged in.
+const isOwner = function(req, res, next) {
+    if(!req.payload) {
+        return res.status(401).json({message: 'Unauthorized user error'});
+    }
+    next();
+};
+/*
+    authentication handler
+*/
+router.post('/account/register', ctrlAuth.register);
+router.post('/account/login', ctrlAuth.login);
+//Owner of the account can write, modify and read their information
+router.get('/account/profile', isOwner, ctrlAuth.profile);
+router.put('/account/edit', isOwner, ctrlAuth.edit);
+router.delete('/account/delete', isOwner, ctrlAuth.deleteOne);
 
 
 module.exports = router;
