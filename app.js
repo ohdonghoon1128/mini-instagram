@@ -18,11 +18,23 @@ require('./app_api/config/passport');
 //minify client-side javascript files
 try {
     const appClientFiles = [
+        fs.readFileSync('public/app_client/app.js', 'utf8'),
+        fs.readFileSync('public/app_client/home/home.controller.js', 'utf8'),
+        fs.readFileSync('public/app_client/loginModal/loginModal.controller.js', 'utf8'),
+        fs.readFileSync('public/app_client/registerModal/registerModal.controller.js', 'utf8'),
+        fs.readFileSync('public/app_client/common/directives/navigation.directive.js', 'utf8'),
+        fs.readFileSync('public/app_client/common/directives/navigation.controller.js', 'utf8'),
+        fs.readFileSync('public/app_client/common/directives/footerGeneric.directive.js', 'utf8')
+        //fs.readFileSync('public/app_client/', 'utf8'),
+        //fs.readFileSync('public/app_client/', 'utf8'),
+        //fs.readFileSync('public/app_client/', 'utf8'),
+        //fs.readFileSync('public/app_client/', 'utf8'),
+        //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/app.js', 'utf8'),
     ];
 
     const uglified = uglifyEs.minify(appClientFiles, {compress: false});
-    //fs.writeFileSync('public/angular/instaApp.min.js', uglified.code);
+    fs.writeFileSync('public/angular/mini-instagram.min.js', uglified.code);
 } catch(e) {
     console.log(e);
     process.exit(1);

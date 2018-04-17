@@ -14,6 +14,10 @@ April, 15, 2018
     2. create an instruction.txt that shows how to install this mini-instagram server
     3. create basic homepage with angularJs
 
+April, 16, 2018
+    1. create home page with angularJS
+        1.1 home page show some test images downloaded from server
+    2. create login Modal and register Modal
 
 
 To do later
