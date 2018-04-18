@@ -72,8 +72,8 @@ const profile = function(req, res) {
     update a user profile
 */
 const edit = function(req, res) {
-    if(!req.body.password || !req.body.email) {
-        return res.status(404).json({message: 'email and password are required'});
+    if(!req.body.password) {
+        return res.status(404).json({message: 'password is required'});
     }
 
     User
@@ -86,10 +86,16 @@ const edit = function(req, res) {
                 });
             } else if(!user) {
                 return res.status(404).json({message: `${req.payload.userid} not found`});
+            } else if(!user.validPassword(req.body.password)) {
+                return res.status(401).json({message: `incorrect password`});
             }
 
-            user.setPassword(req.body.password);
-            user.email = req.body.email;
+            if(req.body.newPassword) {
+                user.setPassword(req.body.newPassword);
+            }
+            if(req.body.email) {
+                user.email = req.body.email;
+            }
             user.save((err) => {
                 if(err) {
                     return res.status(404).json({
@@ -107,6 +113,10 @@ const edit = function(req, res) {
     delete a user account
 */
 const deleteOne = function(req, res) {
+    if(!req.body.password) {
+        return res.status(404).json({message: 'password is required'});
+    }
+
     User
         .findOne({userid: req.payload.userid})
         .exec((err, user) => {
@@ -117,6 +127,8 @@ const deleteOne = function(req, res) {
                 });
             } else if(!user) {
                 return res.status(404).json({message: `${req.payload.userid} not found`});
+            } else if(!user.validPassword(req.body.password)) {
+                return res.status(401).json({message: `incorrect password`});
             }
             res.status(201).json(null);
 

@@ -23,7 +23,13 @@ April, 17, 2018
     1. implemented login, register, edit, profile and delete function in authentication.js
     2. tested with mongodb. it works fine
 
+
 To do later
 - /app_api/controllers/authentications.js
     deleteUser must clean all comments and photos that related to the user
 
+- add profile page
+- add user account delete function on client side
+
+- add photo delete photo edit photo page
+- implement photo handler on server side

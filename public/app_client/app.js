@@ -9,34 +9,24 @@
                 controller: 'homeCtrl',
                 controllerAs: 'vm'
             })
+            .when('/setting/profile', {
+                templateUrl: '/app_client/profile/profile.view.html',
+                controller: 'profileCtrl',
+                controllerAs: 'vm'
+            })
+            .when('/setting/account', {
+                templateUrl: '/app_client/account/account.view.html',
+                controller: 'accountCtrl',
+                controllerAs: 'vm'
+            })
             /*.when('/user/:userid', {
-                templateUrl: '/user/user.view.html',
+                templateUrl: '/app_client/user/user.view.html',
                 controller: 'userCtrl',
-                controllerAs: 'vm'
-            })*/
-            /*.when('/', {
-                templateUrl: '',
-                controller: '',
-                controllerAs: 'vm'
-            })*/
-            /*.when('/', {
-                templateUrl: '',
-                controller: '',
                 controllerAs: 'vm'
             })
             .when('/', {
                 templateUrl: '',
                 controller: '',
-                controllerAs: 'vm'
-            })
-            .when('/auth/register', {
-                templateUrl: '/auth/register/register.view.html',
-                controller: 'registerCtrl',
-                controllerAs: 'vm'
-            })
-            .when('/auth/login', {
-                templateUrl: '/auth/login/login.view.html',
-                controller: 'loginCtrl',
                 controllerAs: 'vm'
             })*/
             .otherwise({redirectTo: '/'});

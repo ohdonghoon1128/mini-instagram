@@ -20,13 +20,16 @@ try {
     const appClientFiles = [
         fs.readFileSync('public/app_client/app.js', 'utf8'),
         fs.readFileSync('public/app_client/home/home.controller.js', 'utf8'),
+        fs.readFileSync('public/app_client/profile/profile.controller.js', 'utf8'),
+        fs.readFileSync('public/app_client/account/account.controller.js', 'utf8'),
         fs.readFileSync('public/app_client/loginModal/loginModal.controller.js', 'utf8'),
         fs.readFileSync('public/app_client/registerModal/registerModal.controller.js', 'utf8'),
+        fs.readFileSync('public/app_client/common/directives/pageHeader.directive.js', 'utf8'),
         fs.readFileSync('public/app_client/common/directives/navigation.directive.js', 'utf8'),
         fs.readFileSync('public/app_client/common/directives/navigation.controller.js', 'utf8'),
         fs.readFileSync('public/app_client/common/directives/footerGeneric.directive.js', 'utf8'),
+        fs.readFileSync('public/app_client/common/directives/settingPanel.directive.js', 'utf8'),
         fs.readFileSync('public/app_client/common/services/authentication.service.js', 'utf8')
-        //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/', 'utf8'),

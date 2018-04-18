@@ -1,0 +1,52 @@
+<navigation></navigation>
+
+<div class="container">
+	<page-header content="vm.pageHeader"></page-header>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-3">
+			<setting-panel select="vm.pageHeader.title"><setting-panel>
+		</div>
+		<div class="col-xs-12 col-sm-9">
+			<div class="row">
+				<form ng-submit="vm.onSubmit()" role="form">
+					<div class="alert alert-danger fade in" ng-show="vm.formError">
+						<a href="" class="close" data-dismiss="alert">&times;</a>
+						{{vm.formError}}
+					</div>
+					<div class="alert alert-success fade in" ng-show="vm.formSuccess">
+						<a href="" class="close" data-dismiss="alert">&times;</a>
+						{{vm.formSuccess}}
+					</div>
+					<div class="form-group">
+						<label for="password">Old password</label>
+						<input type="password" id="password" class="form-control" ng-model="vm.formData.password">
+					</div>
+					<div class="form-group">
+						<label for="newPassword">New password</label>
+						<input type="password" id="newPassword" class="form-control" ng-model="vm.formData.newPassword">
+					</div>
+					<div class="form-group">
+						<label for="confirmNewPassword">Confirm new password</label>
+						<input type="password" id="confirmNewPassword" class="form-control" ng-model="vm.formData.confirmNewPassword">
+					</div>
+					<button type="submit" class="btn btn-success">Change password</button>
+				</form>
+			</div>
+			&nbsp;
+			<div class="row">
+				<div class="panel panel-danger">
+					<div class="panel-heading">
+						<h4 class="panel-title">DELETE ACCOCUNT</h4>
+					</div>
+					<div class="panel-body">
+						Once you delete your account, you CANNOT recover your account again.
+						<button type="button" class="btn btn-danger">Delete My Account</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer-generic></footer-generic>
+</div>

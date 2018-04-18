@@ -1,12 +1,10 @@
 <navigation></navigation>
 
 <div class="container">
-	<!--page-header content="vm.pageHeader"></page-header-->
+	<page-header content="vm.pageHeader"></page-header>
 
-	Hey you i'm home page
 
 	<div class="row">
-		{{vm.data.photos}}
 		<div class="col-xs-12 col-sm-4" ng-repeat="photo in vm.data.photos">
 			<a ng-click="" href="https://google.com">
 				<img ng-src="https://localhost:3001/{{photo}}" class="img-thumbnail img-rounded">

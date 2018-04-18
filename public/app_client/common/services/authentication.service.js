@@ -33,6 +33,24 @@
                         });
         };
 
+        const changeProfile = function(user) {
+        /*
+            return $http.put(`/api/account/edit`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
+                        .then((res) => {
+                            saveToken(res.data.token);
+                            return res;
+                        });
+                        */
+        };
+
+        const changePassword = function(user) {
+            return $http.put(`/api/account/edit`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
+                        .then((res) => {
+                            saveToken(res.data.token);
+                            return res;
+                        });
+        };
+
         const logout = function() {
             $window.localStorage.removeItem('userToken');
         };
@@ -67,6 +85,8 @@
             saveToken: saveToken,
             register: register,
             login: login,
+            changeProfile: changeProfile,
+            changePassword: changePassword,
             logout: logout,
             isLoggedIn: isLoggedIn,
             currentUser: currentUser
