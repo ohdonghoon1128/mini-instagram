@@ -49,7 +49,7 @@ const login = function(req, res) {
 /*
     read a user profile
 */
-const profile = function(req, res) {
+const readProfile = function(req, res) {
     User
         .findOne({userid: req.payload.userid})
         .exec((err, user) => {
@@ -71,11 +71,37 @@ const profile = function(req, res) {
 /*
     update a user profile
 */
-const edit = function(req, res) {
-    if(!req.body.password) {
-        return res.status(404).json({message: 'password is required'});
-    }
+const updateProfile = function(req, res) {
+    User
+        .findOne({userid: req.payload.userid})
+        .exec((err, user) => {
+            if(err) {
+                return res.status(404).json({
+                    name: err.name,
+                    message: err.message
+                });
+            } else if(!user) {
+                return res.status(404).json({message: `${req.payload.userid} not found`});
+            }
+            
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
+            user.save((err) => {
+                if(err) {
+                    return res.status(404).json({
+                        name: err.name,
+                        message: err.message
+                    });
+                }
+                res.status(200).json({token: user.generateJwt()});
+            });
+        });
+};
 
+/*
+    update a user password
+*/
+const updatePassword = function(req, res) {
     User
         .findOne({userid: req.payload.userid})
         .exec((err, user) => {
@@ -87,15 +113,14 @@ const edit = function(req, res) {
             } else if(!user) {
                 return res.status(404).json({message: `${req.payload.userid} not found`});
             } else if(!user.validPassword(req.body.password)) {
-                return res.status(401).json({message: `incorrect password`});
+                return res.status(401).json({message: `incorrect old password`});
             }
 
-            if(req.body.newPassword) {
-                user.setPassword(req.body.newPassword);
+
+            if(!req.body.newPassword) {
+                return res.status(404).json({message: 'new password required'});
             }
-            if(req.body.email) {
-                user.email = req.body.email;
-            }
+            user.setPassword(req.body.newPassword);
             user.save((err) => {
                 if(err) {
                     return res.status(404).json({
@@ -112,11 +137,7 @@ const edit = function(req, res) {
 /*
     delete a user account
 */
-const deleteOne = function(req, res) {
-    if(!req.body.password) {
-        return res.status(404).json({message: 'password is required'});
-    }
-
+const deleteAccount = function(req, res) {
     User
         .findOne({userid: req.payload.userid})
         .exec((err, user) => {
@@ -127,10 +148,21 @@ const deleteOne = function(req, res) {
                 });
             } else if(!user) {
                 return res.status(404).json({message: `${req.payload.userid} not found`});
-            } else if(!user.validPassword(req.body.password)) {
+            }/* else if(!user.validPassword(req.body.password)) {
                 return res.status(401).json({message: `incorrect password`});
-            }
-            res.status(201).json(null);
+            }*/
+
+            user
+                .remove()
+                .then((val) => {
+                    res.status(204).json(null);
+                })
+                .catch((err) => {
+                    res.status(404).json({
+                        name: err.name,
+                        message: name.message
+                    });
+                });
 
             //******************************************************************************************************************************
             //have to clean all comments and photos that related to this user
@@ -140,7 +172,8 @@ const deleteOne = function(req, res) {
 module.exports = {
     register: register,
     login: login,
-    profile: profile,
-    edit: edit,
-    deleteOne: deleteOne
+    readProfile: readProfile,
+    updateProfile: updateProfile,
+    updatePassword: updatePassword,
+    deleteAccount: deleteAccount
 };

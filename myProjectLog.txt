@@ -33,3 +33,7 @@ To do later
 
 - add photo delete photo edit photo page
 - implement photo handler on server side
+
+- Revisit DELETE user function on (app_api/controllers/authentication.js, app_api/routes/index.js)
+    client side delete user button should popup confirmation window and force user enter password
+    right now use can just click button without password and it through exception on server

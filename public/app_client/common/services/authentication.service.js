@@ -35,7 +35,7 @@
 
         const changeProfile = function(user) {
         /*
-            return $http.put(`/api/account/edit`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
+            return $http.put(`/api/account/profile`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
                         .then((res) => {
                             saveToken(res.data.token);
                             return res;
@@ -44,12 +44,16 @@
         };
 
         const changePassword = function(user) {
-            return $http.put(`/api/account/edit`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
+            return $http.put(`/api/account/password`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
                         .then((res) => {
                             saveToken(res.data.token);
                             return res;
                         });
         };
+
+        const deleteAccount = function() {
+            return $http.delete(`/api/account/delete`, {headers: {Authorization: 'Bearer ' + getToken()}});
+        }
 
         const logout = function() {
             $window.localStorage.removeItem('userToken');
@@ -87,6 +91,7 @@
             login: login,
             changeProfile: changeProfile,
             changePassword: changePassword,
+            deleteAccount: deleteAccount,
             logout: logout,
             isLoggedIn: isLoggedIn,
             currentUser: currentUser

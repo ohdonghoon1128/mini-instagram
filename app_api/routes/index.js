@@ -52,9 +52,11 @@ function authLevel(accessRequiredLevel) {
 }
 */
 
+/*
+    Parse user authentication token and add the information to req.payload
+*/
 router.use(auth);
 
-/*ADD authentication middleware later*******************************************************************/
 
 
 /*
@@ -95,10 +97,11 @@ router.delete('/auth/:userid', ctrlAuth.deleteOne);
 */
 
 
+
 //authentication middleware check, if user has logged in.
 const isOwner = function(req, res, next) {
     if(!req.payload) {
-        return res.status(401).json({message: 'Unauthorized user error'});
+        return res.status(401).json({message: 'Invalid token'});
     }
     next();
 };
@@ -108,9 +111,10 @@ const isOwner = function(req, res, next) {
 router.post('/account/register', ctrlAuth.register);
 router.post('/account/login', ctrlAuth.login);
 //Owner of the account can write, modify and read their information
-router.get('/account/profile', isOwner, ctrlAuth.profile);
-router.put('/account/edit', isOwner, ctrlAuth.edit);
-router.delete('/account/delete', isOwner, ctrlAuth.deleteOne);
+router.get('/account/profile', isOwner, ctrlAuth.readProfile);
+router.put('/account/profile', isOwner, ctrlAuth.updateProfile);
+router.put('/account/password', isOwner, ctrlAuth.updatePassword);
+router.delete('/account/delete', isOwner, ctrlAuth.deleteAccount);
 
 
 module.exports = router;

@@ -3,8 +3,8 @@
         .module('instagramApp')
         .controller('accountCtrl', accountCtrl);
 
-    accountCtrl.$inject = ['authentication'];
-    function accountCtrl(authentication) {
+    accountCtrl.$inject = ['authentication', '$location'];
+    function accountCtrl(authentication, $location) {
         const vm = this;
         vm.pageHeader = {
             title: 'Account',
@@ -31,6 +31,15 @@
             return false;
         }
 
-        vm.deleteAccount = function() {};
+        vm.deleteAccount = function() {
+            authentication.deleteAccount()
+                .then((res) => {
+                    authentication.logout();
+                    $location.path('/');
+                })
+                .then(null, (res) => {
+                    vm.formError = res.data.message;
+                });
+        };
     }
 })();
