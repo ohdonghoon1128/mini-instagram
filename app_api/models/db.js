@@ -34,4 +34,4 @@ process.on('SIGINT', () => {
 
 require('./users');
 //require('./comments');
-//require('./photoes');
+require('./photos');
