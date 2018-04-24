@@ -4,6 +4,8 @@ const User = mongoose.model('User');
 const formidable = require('formidable');
 const fs = require('fs');
 
+const PHOTO_API_URL = 'https://localhost:3001/api/photo/';
+
 const accessLevel = {
     OWNER: 0,
     FRIENDS: 1,
@@ -35,7 +37,51 @@ Photo
 
 */
 
+/*
+const listByLikes = function(req, res) {
+    Photo
+        .find()
+        .populate({
+            path: 'owner',
+            match: {isPrivate: false},
+            select: '_id',
+        })
+        .limit(30)
+        .sort('likes')
+        .select('_id')
+        .exec((err, photos) => {
+        
+        });
+};
+*/
 
+
+const listByTime = function(req, res) {
+    Photo
+        .find({})
+        .populate({
+            path: 'owner',
+            match: {isPrivate: false},
+            select: 'userid'
+        })
+        .limit(20)
+        .sort({createdOn: -1})
+        .exec((err, photos) => {
+            if(err) {
+                return res.status(404).json({
+                    name: err.name,
+                    message: err.message
+                });
+            }
+
+            const photoUrls = [];
+            photos.forEach((photo) => {
+                photoUrls.push(PHOTO_API_URL + photo._id.toString());
+            });
+
+            res.status(200).json(photoUrls);
+        });
+};
 
 const listByOwner = function(req, res) {
     const ownerid = req.query.ownerid;
@@ -44,6 +90,47 @@ const listByOwner = function(req, res) {
             message: 'ownerid query required'
         });
     }
+
+    User
+        .findOne({userid: ownerid})
+        .select('_id')
+        .exec((err, user) => {
+            if(err) {
+                return res.status(404).json({
+                    message: err.message,
+                    name: err.name
+                });
+            } else if(!user) {
+                return res.status(404).json({
+                    message: `${ownerid} not found`
+                });
+            }
+
+            if(user._id !== req.payload._id && user.isPrivate/* && !user.followersAcceptList.id(req.payload._id)*/) {
+                return res.status(401).json({
+                    message: 'Unauthorized User Error'
+                });
+            }
+
+            Photo
+                .find({owner: user._id})
+                .select('_id')
+                .exec((err, photos) => {
+                    if(err) {
+                        return res.status(404).json({
+                            message: err.message,
+                            name: err.name
+                        });
+                    }
+
+                    const photoUrls = [];
+                    photos.forEach((photos) => {
+                        photoUrls.push(PHOTO_API_URL + photos._id.toString());
+                    });
+
+                    res.status(200).json(photoUrls);
+                });
+        });
 };
 
 
@@ -54,8 +141,6 @@ const createOne = function(req, res) {
             message: 'you did not log in'
         });
     }
-
-console.log(req.payload);
 
     //check if user account exist in the database, otherwise return error
     User
@@ -72,6 +157,7 @@ console.log(req.payload);
                 });
             }
 
+console.log(req.body);
             //if user account exist, then save the photo to database
             const form = new formidable.IncomingForm();
             //**************************************************************************************
@@ -80,6 +166,14 @@ console.log(req.payload);
             form.maxFieldsSize = 1 * 1024 * 1024; // Allow 1 mega byte fields size
             form.maxFileSize = 14 * 1024 * 1024; // Allow 14 mega byte image size
             form.parse(req, (err, fields, files) => {
+
+console.log(req.body);
+console.log(fields);
+console.log('==========================');
+console.log(files);
+console.log('==========================');
+
+
                 if(err) {
                     return res.status(404).json({
                         name: err.name,
@@ -91,6 +185,7 @@ console.log(req.payload);
                     });
                 }
 
+console.log(req.payload);
 console.log('=========received fields:');
 console.log(fields);
 console.log('===========received files:');
@@ -124,7 +219,45 @@ console.log('========================');
         });
 };
 
-const readOne = function(req, res) {/*
+const readOne = function(req, res) {
+    const photoid = req.params.photoid;
+    if(!photoid) {
+        return res.status(404).json({
+            message: 'photoid param required'
+        });
+    }
+
+    Photo
+        .findById(photoid)
+        .populate('owner', '_id followersAcceptList')
+        .exec((err, photo) => {
+            if(err) {
+                return res.status(404).json({
+                    message: err.message,
+                    name: err.name
+                });
+            } else if(!photo) {
+                return res.status(404).json({
+                    message: `${photoid} does not exist`
+                });
+            }
+            const owner = photo.owner;
+            if(!owner) {
+                res.status(404).json({
+                
+                })
+            }
+            if(owner._id !== req.payload._id && owner.isPrivate /*&& !owner.followersAcceptList.id(req.payload._id)*/) {
+                return res.status(404).json({
+                    message: 'Unauthorized User Error'
+                });
+            }
+
+            res.status(200).contentType(photo.contentType).send(photo.data);
+        });
+
+
+/*
     User.findOne({userid: 'qwer'}).exec((err, user) => {
         Photo.findOne({owner: user._id}).exec((err, photo) => {
             if(err) {
@@ -222,6 +355,7 @@ const deleteOne = function(req, res) {
 
 
 module.exports = {
+    listByTime: listByTime,
     listByOwner: listByOwner,
     createOne: createOne,
     readOne: readOne,

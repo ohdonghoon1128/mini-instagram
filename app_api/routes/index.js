@@ -80,6 +80,7 @@ router.post('/photo', ctrlPhoto.createOne);
 router.get('/photo/:photoid', ctrlPhoto.readOne);
 router.put('/photo/:photoid', ctrlPhoto.updateOne);
 router.delete('/photo/:photoid', ctrlPhoto.deleteOne);
+router.get('/randomPhotos', ctrlPhoto.listByTime);
 
 
 

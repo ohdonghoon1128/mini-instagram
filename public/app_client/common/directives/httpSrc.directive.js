@@ -24,7 +24,7 @@
                     responseType: 'arraybuffer',
                     cache: 'true',
                     headers: {
-                        Authorization: 'Bearer ' + authentication.getToken()
+                        Authorization: authentication.getToken()
                     }
                 };
 

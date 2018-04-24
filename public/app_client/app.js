@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('instagramApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap']);
+        .module('instagramApp', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngFileUpload']);
 
     function config($routeProvider) {
         $routeProvider
@@ -19,11 +19,12 @@
                 controller: 'accountCtrl',
                 controllerAs: 'vm'
             })
-            /*.when('/user/:userid', {
-                templateUrl: '/app_client/user/user.view.html',
-                controller: 'userCtrl',
+            .when('/user/:userid', {
+                templateUrl: '/app_client/home/home.view.html',
+                controller: 'homeCtrl',
                 controllerAs: 'vm'
             })
+            /*
             .when('/', {
                 templateUrl: '',
                 controller: '',

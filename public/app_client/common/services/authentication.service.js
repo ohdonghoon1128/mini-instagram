@@ -6,7 +6,7 @@
     authentication.$inject = ['$http', '$window'];
     function authentication($http, $window) {
         const getToken = function() {
-            return $window.localStorage.userToken;
+            return $window.localStorage.userToken ? 'Bearer ' + $window.localStorage.userToken : '';
         };
 
         const saveToken = function(token) {
@@ -44,7 +44,7 @@
         };
 
         const changePassword = function(user) {
-            return $http.put(`/api/account/password`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
+            return $http.put(`/api/account/password`, user, {headers: {Authorization: getToken()}})
                         .then((res) => {
                             saveToken(res.data.token);
                             return res;
@@ -52,7 +52,7 @@
         };
 
         const deleteAccount = function() {
-            return $http.delete(`/api/account/delete`, {headers: {Authorization: 'Bearer ' + getToken()}});
+            return $http.delete(`/api/account/delete`, {headers: {Authorization: getToken()}});
         }
 
         const logout = function() {
@@ -60,7 +60,7 @@
         };
 
         const isLoggedIn = function() {
-            const token = getToken();
+            const token = $window.localStorage.userToken;
             if(!token) {
                 return false;
             }
@@ -71,7 +71,7 @@
         };
 
         const currentUser = function() {
-            const token = getToken();
+            const token = $window.localStorage.userToken;
             if(!token) {
                 return;
             }

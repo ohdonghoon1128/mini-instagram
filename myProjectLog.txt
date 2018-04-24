@@ -37,3 +37,9 @@ To do later
 - Revisit DELETE user function on (app_api/controllers/authentication.js, app_api/routes/index.js)
     client side delete user button should popup confirmation window and force user enter password
     right now use can just click button without password and it through exception on server
+
+
+- app_client/common/directives/navigation.controller.js
+    fix $windlow.location.assign(vm.currentPath);
+    ex) if im in localhost:3001/#!/user/someUserId, and login, then it will forward me to localhost:3001/user/someUserID
+    and response with not found error

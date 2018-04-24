@@ -24,6 +24,7 @@
             });
 
             uibModalInstance.result.then((data) => {        
+                console.log(vm.currentPath);
                 $window.location.assign(vm.currentPath);
                 $window.reload();
             });
@@ -35,7 +36,8 @@
                 controller: 'registerModalCtrl as vm'
             });
 
-            uibModalInstance.result.then((data) => {        
+            uibModalInstance.result.then((data) => {
+                console.log(vm.currentPath);
                 $window.location.assign(vm.currentPath);
                 $window.reload();
             });

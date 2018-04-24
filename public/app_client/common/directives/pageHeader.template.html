@@ -1,8 +1,34 @@
 <div class="page-header">
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-xs-12">
 			<h2>
-				{{content.title}}
+				<div ng-hide="phvm.thisPage.userid">
+					Random Post from other users
+				</div>
+				<div ng-show="phvm.thisPage.userid">
+					<div ng-hide="userHomePage" class="row">
+						<div class="col-xs-12">Sorry, we cannot find the user</div>
+					</div>
+					<div ng-hide="currentPage" class="row">
+						<div class="col-xs-12 col-sm-3">Name{{otherUser.name}}</div>
+						<div class="col-xs-12 col-sm-9">
+							<div class="row">
+								User Id{{otherUser.userid}}
+								<span ng-show="otherUser.userid === currentUser.userid">
+									<button type="button" class="btn btn-primary"><strong>post picture</strong></button>
+								</span>
+								<span ng-show="otherUser.userid === currentUser.userid"><!-- change it to ng-hide later   -->
+									<span ng-show="true">
+										<button type="button" class="btn btn-primary"><strong>Log in</strong></button>
+									</span>
+									<span ng-show="true">
+										<button type="button" class="btn btn-primary"><strong>follow</strong></button>
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
 			</h2>
 		</div>
 	</div>

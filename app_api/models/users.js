@@ -15,12 +15,15 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     followersReqQ: {
+        //change to mongoose.Schema.Types.ObjectId later
         type: [String]
     },
     followersDenyList: {
+        //change to mongoose.Schema.Types.ObjectId later
         type: [String]
     },
     followersAcceptList: {
+        //change to mongoose.Schema.Types.ObjectId later
         type: [String]
     },
     /*
@@ -29,6 +32,10 @@ const userSchema = new mongoose.Schema({
     },*/
     following: {
         type: [String]
+    },
+    isPrivate: {
+        type: Boolean,
+        default: false
     },
     hash: {
         type: String,

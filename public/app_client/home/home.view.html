@@ -1,15 +1,28 @@
 <navigation></navigation>
 
 <div class="container">
+
+	<!--please don't forget to pass data to page-header -->
+
 	<page-header content="vm.pageHeader"></page-header>
 
-
-	<div class="row">
-		<div class="col-xs-12 col-sm-4" ng-repeat="photo in vm.data.photos">
+	<div class="row" ng-repeat="row in vm.data.urls">
+		<div class="col-xs-12 col-sm-4" ng-repeat="url in row">
 			<a ng-click="" href="https://google.com">
-				<img ng-src="https://localhost:3001/{{photo}}" class="img-thumbnail img-rounded">
+				<img ng-src="{{url}}" class="img-thumbnail img-rounded">
 			</a>
 		</div>
+	</div>
+
+	<div>
+		Upload on form submit or button click
+		<form name="form" ng-submit="submit()">
+  			Single Image with validations
+  			<input type="file"  ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+  			ngf-accept="'image/*'" ngf-max-size="20MB" >Select
+
+  			<button type="submit">submit</button>
+		</form>
 	</div>
 
 	<footer-generic></footer-generic>

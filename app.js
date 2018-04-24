@@ -30,15 +30,18 @@ try {
         fs.readFileSync('public/app_client/common/directives/footerGeneric.directive.js', 'utf8'),
         fs.readFileSync('public/app_client/common/directives/settingPanel.directive.js', 'utf8'),
         fs.readFileSync('public/app_client/common/directives/httpSrc.directive.js', 'utf8'),
-        fs.readFileSync('public/app_client/common/services/authentication.service.js', 'utf8')
+        fs.readFileSync('public/app_client/common/services/authentication.service.js', 'utf8'),
+        fs.readFileSync('public/app_client/common/services/photoData.service.js', 'utf8')
         //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/', 'utf8'),
         //fs.readFileSync('public/app_client/app.js', 'utf8'),
     ];
 
+
     const uglified = uglifyEs.minify(appClientFiles, {compress: false});
     fs.writeFileSync('public/angular/mini-instagram.min.js', uglified.code);
+    console.log(uglified);
 } catch(e) {
     console.log(e);
     process.exit(1);
