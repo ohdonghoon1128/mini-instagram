@@ -9,25 +9,34 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     name: String,
+    description: String,
     email: {
         type: String,
         required: true,
         unique: true
     },
     followersReqQ: {
+        //change to mongoose.Schema.Types.ObjectId later
         type: [String]
     },
     followersDenyList: {
+        //change to mongoose.Schema.Types.ObjectId later
         type: [String]
     },
     followersAcceptList: {
+        //change to mongoose.Schema.Types.ObjectId later
         type: [String]
     },
+    /*
     followsReqQ: {
         type: [String]
-    },
+    },*/
     following: {
         type: [String]
+    },
+    isPrivate: {
+        type: Boolean,
+        default: false
     },
     hash: {
         type: String,
@@ -54,6 +63,7 @@ userSchema.methods.generateJwt = function() {
 
     return jwt.sign({
         exp: exp.getTime(),
+        _id: this._id,
         userid: this.userid,
         email: this.email
     }, process.env.JWT_SECRET);

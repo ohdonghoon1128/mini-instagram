@@ -1,13 +1,12 @@
 <navigation></navigation>
 
 <div class="container">
-	<page-header content="vm.pageHeader"></page-header>
+	<page-header></page-header>
 
-
-	<div class="row">
-		<div class="col-xs-12 col-sm-4" ng-repeat="photo in vm.data.photos">
-			<a ng-click="" href="https://google.com">
-				<img ng-src="https://localhost:3001/{{photo}}" class="img-thumbnail img-rounded">
+	<div class="row" ng-repeat="row in vm.data.photoInfos">
+		<div class="col-xs-12 col-sm-4" ng-repeat="info in row">
+			<a href="" ng-click="vm.popupPhotoDetail(info)">
+				<img ng-src="{{info.url}}" class="img-thumbnail img-rounded">
 			</a>
 		</div>
 	</div>

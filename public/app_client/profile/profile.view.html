@@ -1,30 +1,41 @@
 <navigation></navigation>
 
 <div class="container">
-	<page-header content="vm.pageHeader"></page-header>
+	<div id="banner" class="page-header">
+		<div class="row">
+			<div class="col-xs-12">
+				<h1>
+					{{vm.currentPage.title}}
+				</h1>
+			</div>
+		</div>
+	</div>
 
 	<div class="row">
 		<div class="col-xs-12 col-sm-3">
-			<setting-panel select="vm.pageHeader.title"><setting-panel>
+			<setting-panel select="vm.currentPage.title"><setting-panel>
 		</div>
 		<div class="col-xs-12 col-sm-9">
 			<form ng-submit="vm.onSubmit()" role="form">
-				<div class="alert alert-danger fade in" ng-show="vm.formError">
-					<a href="" class="close" data-dismiss="alert">&times;</a>
+				<div class="alert alert-danger" ng-show="vm.formError">
 					{{vm.formError}}
 				</div>
-				<div class="alert alert-success fade in" ng-show="vm.formSuccess">
-					<a href="" class="close" data-dismiss="alert">&times;</a>
+				<div class="alert alert-success" ng-show="vm.formSuccess">
 					{{vm.formSuccess}}
 				</div>
 				<div class="form-group">
-					<label for="name">Name</label>
-					<input type="text" id="name" class="form-control" ng-model="vm.formData.name">
+					<label for="name">Name (within 50 characters)</label>
+					<input type="text" id="name" maxlength="50" class="form-control" ng-model="vm.formData.name">
+				</div>
+				<div class="form-group">
+					<label for="description">Description (within 200 characters)</label>
+					<textarea id="description" maxlength="200" class="form-control" ng-model="vm.formData.description"></textarea>
 				</div>
 				<div class="form-group">
 					<label for="email">Email</label>
 					<input type="email" id="email" class="form-control" ng-model="vm.formData.email">
 				</div>
+
 				<button type="submit" class="btn btn-success">Change profile</button>
 			</form>
 		</div>

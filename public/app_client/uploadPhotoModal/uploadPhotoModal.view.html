@@ -1,0 +1,23 @@
+<div class="modal-content">
+	<form name="form" ng-submit="vm.submit()">
+		<div class="modal-header">
+			<button type="button" class="close" ng-click="vm.modal.cancel()">
+				<span aria-hidden="true">&times;</span>
+				<span class="sr-only">Close</span>
+			</button>
+			<h2 class="modal-title">Upload Your Photo</h2>
+		</div>
+		<div class="modal-body">
+			<div class="alert alert-danger" ng-show="vm.formError">{{vm.formError}}</div>
+
+			Select your photo
+	  		<input type="file"  ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+	  		ngf-accept="'image/*'" ngf-max-size="15MB">
+
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" ng-click="vm.modal.cancel()">Cancel</button>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</form>
+</div>

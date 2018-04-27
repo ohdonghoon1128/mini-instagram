@@ -1,47 +1,82 @@
 <navigation></navigation>
 
 <div class="container">
-	<page-header content="vm.pageHeader"></page-header>
+	<div id="banner" class="page-header">
+		<div class="row">
+			<div class="col-xs-12">
+				<h1>
+					{{vm.currentPage.title}}
+				</h1>
+			</div>
+		</div>
+	</div>
 
 	<div class="row">
 		<div class="col-xs-12 col-sm-3">
-			<setting-panel select="vm.pageHeader.title"><setting-panel>
+			<setting-panel select="vm.currentPage.title"><setting-panel>
 		</div>
 		<div class="col-xs-12 col-sm-9">
 			<div class="row">
-				<form ng-submit="vm.onSubmit()" role="form">
-					<div class="alert alert-danger fade in" ng-show="vm.formError">
-						<a href="" class="close" data-dismiss="alert">&times;</a>
-						{{vm.formError}}
-					</div>
-					<div class="alert alert-success fade in" ng-show="vm.formSuccess">
-						<a href="" class="close" data-dismiss="alert">&times;</a>
-						{{vm.formSuccess}}
-					</div>
-					<div class="form-group">
-						<label for="password">Old password</label>
-						<input type="password" id="password" class="form-control" ng-model="vm.formData.password">
-					</div>
-					<div class="form-group">
-						<label for="newPassword">New password</label>
-						<input type="password" id="newPassword" class="form-control" ng-model="vm.formData.newPassword">
-					</div>
-					<div class="form-group">
-						<label for="confirmNewPassword">Confirm new password</label>
-						<input type="password" id="confirmNewPassword" class="form-control" ng-model="vm.formData.confirmNewPassword">
-					</div>
-					<button type="submit" class="btn btn-success">Change password</button>
-				</form>
+				<div class="col-xs-12">
+					<form ng-submit="vm.onSubmit()" role="form">
+						<div class="alert alert-danger fade in" ng-show="vm.formError">
+							{{vm.formError}}
+						</div>
+						<div class="alert alert-success fade in" ng-show="vm.formSuccess">
+							{{vm.formSuccess}}
+						</div>
+						<div class="form-group">
+							<label for="password">Old password</label>
+							<input type="password" id="password" class="form-control" ng-model="vm.formData.password">
+						</div>
+						<div class="form-group">
+							<label for="newPassword">New password</label>
+							<input type="password" id="newPassword" class="form-control" ng-model="vm.formData.newPassword">
+						</div>
+						<div class="form-group">
+							<label for="confirmNewPassword">Confirm new password</label>
+							<input type="password" id="confirmNewPassword" class="form-control" ng-model="vm.formData.confirmNewPassword">
+						</div>
+						<button type="submit" class="btn btn-success">Change password</button>
+					</form>
+				</div>
 			</div>
 			&nbsp;
 			<div class="row">
-				<div class="panel panel-danger">
-					<div class="panel-heading">
-						<h4 class="panel-title">DELETE ACCOCUNT</h4>
+				<div class="col-xs-12">
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							<h4 class="panel-title">My Photo Accessibility (Current setting is <strong>{{vm.getAccessLevel}}</strong>)</h4>
+						</div>
+						<div class="panel-body">
+							<div>
+								<label><input type="radio" name="isPrivate" ng-model="vm.isPrivate" value="private">Private</label>
+								(only your friends can see your photo)
+							</div>
+							<div>
+								<label><input type="radio" name="isPrivate" ng-model="vm.isPrivate" value="public">Public</label>
+								(anyone can see your photo)
+							</div>
+							<button ng-click="vm.changeAccessLevel()" type="button" class="btn btn-danger">Change accessibility</button>
+						</div>
 					</div>
-					<div class="panel-body">
-						Once you delete your account, you CANNOT recover your account again.
-						<button ng-click="vm.deleteAccount()" type="button" class="btn btn-danger">Delete My Account</button>
+				</div>
+			</div>
+			&nbsp;
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							<h4 class="panel-title">DELETE ACCOCUNT</h4>
+						</div>
+						<div class="panel-body">
+							<h4><strong>Once you delete your account, you CANNOT recover your account again.</strong></h4>
+							<div>
+								<label for="deletePassword">password: </label>
+								<input type="deletePassword" id="deletePassword" name="deletePassword" ng-model="vm.deletePassword">
+								<button ng-click="vm.deleteAccount()" type="button" class="btn btn-danger">Delete My Account</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

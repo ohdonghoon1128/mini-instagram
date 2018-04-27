@@ -6,7 +6,7 @@
     authentication.$inject = ['$http', '$window'];
     function authentication($http, $window) {
         const getToken = function() {
-            return $window.localStorage.userToken;
+            return $window.localStorage.userToken ? 'Bearer ' + $window.localStorage.userToken : '';
         };
 
         const saveToken = function(token) {
@@ -44,15 +44,15 @@
         };
 
         const changePassword = function(user) {
-            return $http.put(`/api/account/password`, user, {headers: {Authorization: 'Bearer ' + getToken()}})
+            return $http.put(`/api/account/password`, user, {headers: {Authorization: getToken()}})
                         .then((res) => {
                             saveToken(res.data.token);
                             return res;
                         });
         };
 
-        const deleteAccount = function() {
-            return $http.delete(`/api/account/delete`, {headers: {Authorization: 'Bearer ' + getToken()}});
+        const deleteAccount = function(password) {
+            return $http.post(`/api/account/delete`, {password: password}, {headers: {Authorization: getToken()}});
         }
 
         const logout = function() {
@@ -60,7 +60,7 @@
         };
 
         const isLoggedIn = function() {
-            const token = getToken();
+            const token = $window.localStorage.userToken;
             if(!token) {
                 return false;
             }
@@ -71,9 +71,9 @@
         };
 
         const currentUser = function() {
-            const token = getToken();
+            const token = $window.localStorage.userToken;
             if(!token) {
-                return;
+                return {};
             }
 
             const payload = JSON.parse($window.atob(token.split('.')[1]));
@@ -82,6 +82,17 @@
                 userid: payload.userid,
                 email: payload.email
             };
+        };
+
+        const getAccessLevel = function(userid) {
+            return $http.get(`/api/account/user/${userid}/access_level`);
+        };
+        const changeAccessLevel = function(isPrivate) {
+            return $http.put(`/api/account/access_level`, {isPrivate: isPrivate}, {
+                headers: {
+                    Authorization: getToken()
+                }
+            });
         };
 
         return {
@@ -94,7 +105,9 @@
             deleteAccount: deleteAccount,
             logout: logout,
             isLoggedIn: isLoggedIn,
-            currentUser: currentUser
+            currentUser: currentUser,
+            getAccessLevel: getAccessLevel,
+            changeAccessLevel: changeAccessLevel
         };
     }
 })();
