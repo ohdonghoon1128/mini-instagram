@@ -7,16 +7,16 @@
     function uploadPhotoModalCtrl($scope, authentication, Upload, $uibModalInstance) {
         const vm = this;
 
-        /*
-        $scope.submit = function() {
+console.log('photo modal are your executing?');
+
+        vm.submit = function() {
             if($scope.form.file.$valid && $scope.file) {
-                $scope.upload($scope.file);
+                submit($scope.file);
             }
         }
-        */
+        function submit(file) {
+            vm.formError = '';
 
-        $scope.submit = function() {
-            const file = $scope.file;
             Upload
                 .upload({
                     url: '/api/photo/',
@@ -26,10 +26,10 @@
                     }
                 })
                 .then((res) => {
-                    //res.data.id
-                    $uibModalInstance.close(/**/);
+                    $uibModalInstance.close(res.data.photoUrl);
                 })
                 .then(null, (res) => {
+                    vm.formError = 'Uploading Failed, Please try later.';
                     console.log(res.data.message);
                 });
         }

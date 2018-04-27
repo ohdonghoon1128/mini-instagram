@@ -59,27 +59,37 @@ const listByLikes = function(req, res) {
 const listByTime = function(req, res) {
     Photo
         .find({})
+        .select('-data')
         .populate({
             path: 'owner',
             match: {isPrivate: false},
-            select: 'userid'
+            select: 'userid isPrivate'
         })
-        .limit(20)
-        .sort({createdOn: -1})
         .exec((err, photos) => {
             if(err) {
+                console.log('error herer?');
                 return res.status(404).json({
                     name: err.name,
                     message: err.message
                 });
             }
 
-            const photoUrls = [];
-            photos.forEach((photo) => {
-                photoUrls.push(PHOTO_API_URL + photo._id.toString());
+            photos = photos.filter((photo) => {
+                return photo.owner && !photo.owner.isPrivate;
+            }).map((photo) => {
+                return {
+                    name: photo.name,
+                    ownerid: photo.owner.userid,
+                    photoid: photo._id.toString(),
+                    url: PHOTO_API_URL + photo._id.toString()
+                };
             });
 
-            res.status(200).json(photoUrls);
+            res.status(200).json(photos.slice(0, 20));
+
+            //Delete this later =============================
+            console.log(photos.slice(0, 20));
+            //Delete this later =============================
         });
 };
 
@@ -93,7 +103,7 @@ const listByOwner = function(req, res) {
 
     User
         .findOne({userid: ownerid})
-        .select('_id')
+        .select('_id, userid')
         .exec((err, user) => {
             if(err) {
                 return res.status(404).json({
@@ -114,7 +124,7 @@ const listByOwner = function(req, res) {
 
             Photo
                 .find({owner: user._id})
-                .select('_id')
+                .select('_id name')
                 .exec((err, photos) => {
                     if(err) {
                         return res.status(404).json({
@@ -123,12 +133,20 @@ const listByOwner = function(req, res) {
                         });
                     }
 
-                    const photoUrls = [];
-                    photos.forEach((photos) => {
-                        photoUrls.push(PHOTO_API_URL + photos._id.toString());
+                    const photoInfos = [];
+                    photos.forEach((photo) => {
+                        photoInfos.push({
+                            ownerid: user.userid,
+                            name: photo.name,
+                            photoid: photo._id.toString(),
+                            url: PHOTO_API_URL + photo._id.toString(),
+                        });
                     });
 
-                    res.status(200).json(photoUrls);
+                    res.status(200).json(photoInfos);
+                    //Delete this later =============================
+                    console.log(photoInfos);
+                    //Delete this later =============================
                 });
         });
 };
@@ -211,7 +229,7 @@ console.log('========================');
                         }
 
                         res.status(201).json({
-                            message: 'photo saved successfully'
+                            photoUrl: PHOTO_API_URL + photo._id
                         });
                     });
                 });
@@ -243,8 +261,8 @@ const readOne = function(req, res) {
             }
             const owner = photo.owner;
             if(!owner) {
-                res.status(404).json({
-                
+                return res.status(404).json({
+                    message: 'owner of the photo not found'
                 })
             }
             if(owner._id !== req.payload._id && owner.isPrivate /*&& !owner.followersAcceptList.id(req.payload._id)*/) {

@@ -3,8 +3,8 @@
         .module('instagramApp')
         .controller('loginModalCtrl', loginModalCtrl);
 
-    loginModalCtrl.$inject = ['$uibModalInstance', 'authentication'];
-    function loginModalCtrl($uibModalInstance, authentication) {
+    loginModalCtrl.$inject = ['$uibModalInstance', 'authentication', '$location'];
+    function loginModalCtrl($uibModalInstance, authentication, $location) {
         const vm = this;
 
         vm.formData = {};
@@ -22,6 +22,7 @@
                     .then((res) => {
                         //successfully login
                         $uibModalInstance.close();
+                        
                     })
                     .then(null, (res) => {
                         //unsuccessful, because incorrect username or password, or other reason

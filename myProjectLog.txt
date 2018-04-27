@@ -43,3 +43,6 @@ To do later
     fix $windlow.location.assign(vm.currentPath);
     ex) if im in localhost:3001/#!/user/someUserId, and login, then it will forward me to localhost:3001/user/someUserID
     and response with not found error
+
+- app_client/addPhotoModal/addPhotoModal.controller.js
+    add some validation 

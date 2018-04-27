@@ -3,8 +3,8 @@
         .module('instagramApp')
         .controller('navigationCtrl', navigationCtrl);
 
-    navigationCtrl.$inject = ['authentication', '$location', '$uibModal', '$window'];
-    function navigationCtrl(authentication, $location, $uibModal, $window) {
+    navigationCtrl.$inject = ['authentication', '$location', '$uibModal', '$window', '$route'];
+    function navigationCtrl(authentication, $location, $uibModal, $window, $route) {
         const vm = this;
 
         vm.isLoggedIn = authentication.isLoggedIn();
@@ -24,9 +24,7 @@
             });
 
             uibModalInstance.result.then((data) => {        
-                console.log(vm.currentPath);
-                $window.location.assign(vm.currentPath);
-                $window.reload();
+                $route.reload();
             });
         };
 
@@ -37,9 +35,7 @@
             });
 
             uibModalInstance.result.then((data) => {
-                console.log(vm.currentPath);
-                $window.location.assign(vm.currentPath);
-                $window.reload();
+                $route.reload();
             });
         };
     }

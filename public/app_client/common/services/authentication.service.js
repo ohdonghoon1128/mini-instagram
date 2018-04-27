@@ -51,8 +51,8 @@
                         });
         };
 
-        const deleteAccount = function() {
-            return $http.delete(`/api/account/delete`, {headers: {Authorization: getToken()}});
+        const deleteAccount = function(password) {
+            return $http.post(`/api/account/delete`, {password: password}, {headers: {Authorization: getToken()}});
         }
 
         const logout = function() {
@@ -73,7 +73,7 @@
         const currentUser = function() {
             const token = $window.localStorage.userToken;
             if(!token) {
-                return;
+                return {};
             }
 
             const payload = JSON.parse($window.atob(token.split('.')[1]));
@@ -82,6 +82,17 @@
                 userid: payload.userid,
                 email: payload.email
             };
+        };
+
+        const getAccessLevel = function(userid) {
+            return $http.get(`/api/account/user/${userid}/access_level`);
+        };
+        const changeAccessLevel = function(isPrivate) {
+            return $http.put(`/api/account/access_level`, {isPrivate: isPrivate}, {
+                headers: {
+                    Authorization: getToken()
+                }
+            });
         };
 
         return {
@@ -94,7 +105,9 @@
             deleteAccount: deleteAccount,
             logout: logout,
             isLoggedIn: isLoggedIn,
-            currentUser: currentUser
+            currentUser: currentUser,
+            getAccessLevel: getAccessLevel,
+            changeAccessLevel: changeAccessLevel
         };
     }
 })();

@@ -11,7 +11,7 @@
         };
         */
 
-        const deletePhoto = function(photoid) {
+        const deletePhotoById = function(photoid) {
             return $http.delete(`/api/photo/${photoid}`, {
                 headers: {
                     Authorization: authentication.getToken()
@@ -43,7 +43,7 @@
         */
 
         return {
-            deletePhoto: deletePhoto,
+            deletePhotoById: deletePhotoById,
 //            getPhoto: getPhoto,
             getPhotoUrlsByUserId: getPhotoUrlsByUserId,
             getPhotoUrlsByTime: getPhotoUrlsByTime

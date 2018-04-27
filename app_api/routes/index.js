@@ -54,7 +54,7 @@ function authLevel(accessRequiredLevel) {
 
 //validate user authentication token and add the information to req.payload
 router.use(auth);
-//if user user does not have token, add empty payload object to request body
+//if user does not have token, add empty payload object to request body
 router.use((req, res, next) => {
     req.payload = req.payload || {};
     next();
@@ -92,8 +92,11 @@ router.delete('/photos/:photoid/comments/:commentid', ctrlComment.deleteOne);
 
 
 
-//authentication middleware check, if user has logged in.
+//this middleware check whether a user has logged in or not.
 const isOwner = function(req, res, next) {
+
+    console.log(req.payload);
+
     if(!req.payload.userid) {
         return res.status(401).json({message: 'Invalid token'});
     }
@@ -102,11 +105,17 @@ const isOwner = function(req, res, next) {
 //Authentication handler
 router.post('/account/register', ctrlAuth.register);
 router.post('/account/login', ctrlAuth.login);
+
 //Owner of the account can write, modify and read their information
 router.get('/account/profile', isOwner, ctrlAuth.readProfile);
 router.put('/account/profile', isOwner, ctrlAuth.updateProfile);
 router.put('/account/password', isOwner, ctrlAuth.updatePassword);
-router.delete('/account/delete', isOwner, ctrlAuth.deleteAccount);
+router.put('/account/access_level', isOwner, ctrlAuth.updateAccessLevel);
+//I want a user send confirmation password in body, so I decide to use POST method instead of DELETE method
+router.post('/account/delete', isOwner, ctrlAuth.deleteAccount);
 
+//read users public information, everyone can access this data
+router.get('/account/user/:userid', ctrlAuth.readPublicInfo);
+router.get('/account/user/:userid/access_level', ctrlAuth.readAccessLevel);
 
 module.exports = router;

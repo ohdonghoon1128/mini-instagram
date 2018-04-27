@@ -6,10 +6,8 @@
     function pageHeader() {
         return {
             restrict: 'EA',
-            scope: {
-                content: '=content'
-            },
-            templateUrl: '/app_client/common/directives/pageHeader.template.html'
+            templateUrl: '/app_client/common/directives/pageHeader.template.html',
+            controller: 'pageHeaderCtrl as phvm'
         };
     }
 })();

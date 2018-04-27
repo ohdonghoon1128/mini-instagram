@@ -1,35 +1,42 @@
-<div class="page-header">
+<div id="banner" class="page-header">
 	<div class="row">
 		<div class="col-xs-12">
-			<h2>
-				<div ng-hide="phvm.thisPage.userid">
-					Random Post from other users
+			&nbsp;
+			<h1>
+				<div ng-hide="phvm.userid">
+					Most recent post from all public users
 				</div>
-				<div ng-show="phvm.thisPage.userid">
-					<div ng-hide="userHomePage" class="row">
-						<div class="col-xs-12">Sorry, we cannot find the user</div>
-					</div>
-					<div ng-hide="currentPage" class="row">
-						<div class="col-xs-12 col-sm-3">Name{{otherUser.name}}</div>
-						<div class="col-xs-12 col-sm-9">
+			</h1>
+				<div ng-show="phvm.userid">
+					<h1>
+						<div ng-hide="phvm.data" class="row">
+							<div class="col-xs-12">Sorry, we cannot find {{phvm.userid}}</div>
+						</div>
+					</h1>
+					<div ng-show="phvm.data" class="row">
+						<div class="col-xs-12 col-sm-2"><h1>{{phvm.data.userid}}</h1></div>
+						<div class="col-xs-12 col-sm-10">
 							<div class="row">
-								User Id{{otherUser.userid}}
-								<span ng-show="otherUser.userid === currentUser.userid">
-									<button type="button" class="btn btn-primary"><strong>post picture</strong></button>
-								</span>
-								<span ng-show="otherUser.userid === currentUser.userid"><!-- change it to ng-hide later   -->
-									<span ng-show="true">
-										<button type="button" class="btn btn-primary"><strong>Log in</strong></button>
+								<div class="col-xs-12">
+									<strong>{{phvm.data.name}}</strong>
+									
+									<span ng-show="phvm.data.userid === phvm.currentUser.userid">
+										<button type="button" ng-click="phvm.popupUpload()" class="btn btn-primary"><strong>post picture</strong></button>
 									</span>
-									<span ng-show="true">
-										<button type="button" class="btn btn-primary"><strong>follow</strong></button>
+									<span ng-show="phvm.data.userid !== phvm.currentUser.userid">
+										<span ng-show="phvm.isLoggedIn">
+											<button type="button" class="btn btn-primary"><strong>follow</strong></button>
+										</span>
 									</span>
-								</span>
+									<div>
+										{{phvm.data.description}}
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</h2>
+
 		</div>
 	</div>
 </div>
