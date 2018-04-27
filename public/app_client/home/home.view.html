@@ -6,7 +6,7 @@
 	<div class="row" ng-repeat="row in vm.data.photoInfos">
 		<div class="col-xs-12 col-sm-4" ng-repeat="info in row">
 			<a href="" ng-click="vm.popupPhotoDetail(info)">
-				<img ng-src="{{info.url}}" class="img-thumbnail img-rounded">
+				<img http-src="{{info.url}}" class="img-thumbnail img-rounded">
 			</a>
 		</div>
 	</div>

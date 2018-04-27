@@ -103,7 +103,7 @@ const listByOwner = function(req, res) {
 
     User
         .findOne({userid: ownerid})
-        .select('_id, userid')
+        .select('_id userid isPrivate followersAcceptList')
         .exec((err, user) => {
             if(err) {
                 return res.status(404).json({
@@ -116,7 +116,7 @@ const listByOwner = function(req, res) {
                 });
             }
 
-            if(user._id !== req.payload._id && user.isPrivate/* && !user.followersAcceptList.id(req.payload._id)*/) {
+            if(user._id.toString() !== req.payload._id && user.isPrivate/* && !user.followersAcceptList.id(req.payload._id)*/) {
                 return res.status(401).json({
                     message: 'Unauthorized User Error'
                 });
@@ -247,7 +247,7 @@ const readOne = function(req, res) {
 
     Photo
         .findById(photoid)
-        .populate('owner', '_id followersAcceptList')
+        .populate('owner', '_id isPrivate followersAcceptList')
         .exec((err, photo) => {
             if(err) {
                 return res.status(404).json({
@@ -265,7 +265,9 @@ const readOne = function(req, res) {
                     message: 'owner of the photo not found'
                 })
             }
-            if(owner._id !== req.payload._id && owner.isPrivate /*&& !owner.followersAcceptList.id(req.payload._id)*/) {
+            if(owner._id.toString() !== req.payload._id && owner.isPrivate /*&& !owner.followersAcceptList.id(req.payload._id)*/) {
+console.log('the owner of photo info: ' + owner._id.toString());
+console.log('my info: ' + req.payload);
                 return res.status(404).json({
                     message: 'Unauthorized User Error'
                 });
