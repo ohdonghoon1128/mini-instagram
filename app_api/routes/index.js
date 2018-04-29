@@ -27,12 +27,10 @@ router.use(auth);
 
 //if user does not have token, add empty payload object to request body
 router.use((req, res, next) => {
-    console.log('My log in info: ' + req.payload);
+    console.log(req.payload);
     req.payload = req.payload || {};
     next();
 });
-
-
 
 
 /*
@@ -47,12 +45,12 @@ router.delete('/users/:userid', ctrlUser.deleteOne);
 
 
 //photo route handler
-router.get('/photo', ctrlPhoto.listByOwner); //req.query.userid must be provided and controller must check it
-router.post('/photo', ctrlPhoto.createOne);
-router.get('/photo/:photoid', ctrlPhoto.readOne);
-router.put('/photo/:photoid', ctrlPhoto.updateOne);
-router.delete('/photo/:photoid', ctrlPhoto.deleteOne);
 router.get('/randomPhotos', ctrlPhoto.listByTime);
+router.get('/photo', ctrlPhoto.listByOwner); //req.query.userid must be provided and controller must check it
+router.post('/photo', isLoggedIn, ctrlPhoto.createOne);
+router.get('/photo/:photoid', ctrlPhoto.readOne);
+router.put('/photo/:photoid', isLoggedIn, ctrlPhoto.updateOne);
+router.delete('/photo/:photoid', isLoggedIn, ctrlPhoto.deleteOne);
 
 
 
