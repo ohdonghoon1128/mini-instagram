@@ -10,10 +10,23 @@
 		<div class="modal-body">
 			<div class="row">
 				<div class="col-xs-12 col-sm-9">
-					<img ng-src="{{vm.photoInfo.url}}" class="img-thumbnail img-rounded">
+					<img http-src="{{vm.photoInfo.url}}" class="img-thumbnail img-rounded">
 				</div>
 				<div class="col-xs-12 col-sm-3">
-
+					<div class="row">
+						<div>
+							<textarea id="comment" maxlength="50" ng-model="vm.sendingData.comment"></textarea>
+						</div>
+						<button type="button" class="btn btn-primary" ng-click="vm.addComment()">Send comment</button>
+					</div>
+					&nbsp;
+					<div class="row comments">
+						<div class="col-xs-12">
+							<div class="row" ng-repeat="comment in vm.receivedData.comments">
+								<a href="/#!/user/{{comment.author}}">{{comment.author}}</a> {{comment.comment}}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

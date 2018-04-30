@@ -17,6 +17,8 @@
                 vm.formError = 'userid, email and password are required!';
             } else if(vm.formData.password !== vm.confirmPassword) {
                 vm.formError = 'Your password does not match each other.';
+            } else if(vm.formData.userid.search(/^[A-Za-z][A-Za-z0-9_]*$/) < 0) {
+                vm.formError = 'Your id start with alphabet character followed by alphabet or _ character';
             } else {
                 //if userid nad password given, then try to login
                 authentication.register(vm.formData)

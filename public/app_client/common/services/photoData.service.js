@@ -35,18 +35,30 @@
 
         const getPhotoUrlsByTime = function() {
             return $http.get(`/api/randomPhotos`);
-        }
-
-        /*
-        const updatePhoto = function() {
         };
-        */
+
+        const getCommentsById = function(photoid) {
+            return $http.get(`/api/photo/${photoid}/comment`, {
+                headers: {
+                    Authorization: authentication.getToken()
+                }
+            });
+        };
+
+        const addCommentById = function(photoid, comment) {
+            return $http.post(`/api/photo/${photoid}/comment`, {comment: comment}, {
+                headers: {
+                    Authorization: authentication.getToken()
+                }
+            });
+        };
 
         return {
             deletePhotoById: deletePhotoById,
-//            getPhoto: getPhoto,
             getPhotoUrlsByUserId: getPhotoUrlsByUserId,
-            getPhotoUrlsByTime: getPhotoUrlsByTime
+            getPhotoUrlsByTime: getPhotoUrlsByTime,
+            getCommentsById: getCommentsById,
+            addCommentById: addCommentById
         };
     }
 })();

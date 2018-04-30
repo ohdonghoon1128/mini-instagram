@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Photo = mongoose.model('Photo');
 const passport = require('passport');
 
-const NAME_LEN = 50;
-const DESCRIPTION_LEN = 200;
+const USERID_LEN = 20;
+const NAME_LEN = 20;
+const DESCRIPTION_LEN = 100;
 
 /*
     creat a user account
@@ -12,14 +14,22 @@ const register = function(req, res) {
     if(!req.body.userid || !req.body.email || !req.body.password) {
         return res.status(404).json({message: 'userid, email and password required'});
     }
-
-/*
-    /^[A-Za-z][0-9A-Za-z_]*$/
-*/
+    
+    let userid = req.body.userid;
+    if(typeof userid !== 'string') {
+        return res.status(404).json({message: 'userid must be string type'});
+    }
+    if(userid.search(/^[A-Za-z][A-Za-z0-9_]*$/) < 0) {
+        return res.status(404).json({message: 'userid format error'});
+    }
+    if(userid.length > 20) {
+        return res.status(404).json({message: 'userid max length must be 20'});
+    }
+    userid = userid.toLowerCase();
 
 
     const user = new User();
-    user.userid = req.body.userid;
+    user.userid = userid;
     user.email = req.body.email;
     user.setPassword(req.body.password);
 
@@ -39,6 +49,11 @@ const register = function(req, res) {
     login
 */
 const login = function(req, res) {
+    if(typeof req.body.userid !== 'string') {
+        return res.status(404).json({message: 'userid must be string type'});
+    }
+    req.body.userid = req.body.userid.toLowerCase();
+
     passport.authenticate('local', (err, user, info) => {
         if(err) {
             res.status(404).json({
@@ -179,17 +194,19 @@ const deleteAccount = function(req, res) {
             user
                 .remove()
                 .then((val) => {
-                    res.status(204).json(null);
+                    Photo.remove({owner: user._id}, (err) => {
+                        if(err) {
+                            console.log(`photo delete ERROR: ownerid ${user._id}`);
+                        }
+                        res.status(204).json(null);
+                    });
                 })
                 .catch((err) => {
                     res.status(404).json({
                         name: err.name,
-                        message: name.message
+                        message: err.message
                     });
                 });
-
-            //******************************************************************************************************************************
-            //have to clean all comments and photos that related to this user
         });
 };
 
