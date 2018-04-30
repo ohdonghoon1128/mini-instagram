@@ -9,20 +9,52 @@
         const COLUMN = 3;
 
         vm.data = {};
+        vm.pageNum = 0;
 
         const userid = $routeParams.userid;
         if(userid) {
             //download data from userid
-            userPage(userid);
+            userPage(userid, vm.pageNum);
+
+            vm.prevPage = function() {
+                if(vm.pageNum <= 0) {
+                    return;
+                }
+                vm.pageNum--;
+                userPage(userid, vm.pageNum);
+            }
+            vm.nextPage = function() {
+                if(vm.data.isLastPage) {
+                    return;
+                }
+                vm.pageNum++;
+                userPage(userid, vm.pageNum);
+            }
         } else {
             //download most recent post
-            homePage();
+            homePage(vm.pageNum);
+
+            vm.prevPage = function() {
+                if(vm.pageNum <= 0) {
+                    return;
+                }
+                vm.pageNum--;
+                homePage(vm.pageNum);
+            }
+            vm.nextPage = function() {
+                if(vm.data.isLastPage) {
+                    return;
+                }
+                vm.pageNum++;
+                homePage(vm.pageNum);
+            }
         }
 
-        function homePage() {
-            photoData.getPhotoUrlsByTime()
+        function homePage(page) {
+            photoData.getPhotoUrlsByTime(page)
                 .then((res) => {
-                    vm.data.photoInfos = to2dArray(res.data, COLUMN);
+                    vm.data.photoInfos = to2dArray(res.data.photoInfos, COLUMN);
+                    vm.data.isLastPage = res.data.isLastPage;
                     vm.popupPhotoDetail = popupPhotoDetail;
                 })
                 .then(null, (res) => {
@@ -30,10 +62,11 @@
                 });
         }
 
-        function userPage(userid) {
-            photoData.getPhotoUrlsByUserId(userid)
+        function userPage(userid, page) {
+            photoData.getPhotoUrlsByUserId(userid, page)
                 .then((res) => {
-                    vm.data.photoInfos = to2dArray(res.data, COLUMN);
+                    vm.data.photoInfos = to2dArray(res.data.photoInfos, COLUMN);
+                    vm.data.isLastPage = res.data.isLastPage;
                     vm.popupPhotoDetail = popupPhotoDetail;
                 })
                 .then(null, (res) => {

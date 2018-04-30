@@ -10,6 +10,20 @@
 			</a>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<nav aria-label="...">
+				<ul class="pager">
+					<li class="previous {{vm.pageNum ? '' : 'disabled'}}">
+						<a href="" ng-click="vm.prevPage()"><span aria-hidden="true">&larr;</span> Newer</a>
+					</li>
+					<li class="next {{vm.data.isLastPage ? 'disabled' : ''}}">
+						<a href="" ng-click="vm.nextPage()">Older <span aria-hidden="true">&rarr;</span></a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 
 	<footer-generic></footer-generic>
 </div>

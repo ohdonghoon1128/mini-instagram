@@ -25,16 +25,16 @@
         };
         */
 
-        const getPhotoUrlsByUserId = function(owner) {
-            return $http.get(`/api/photo?ownerid=${owner}`, {
+        const getPhotoUrlsByUserId = function(owner, page) {
+            return $http.get(`/api/photo?ownerid=${owner}&page=${page}`, {
                 headers: {
                     Authorization: authentication.getToken()
                 }
             });
         };
 
-        const getPhotoUrlsByTime = function() {
-            return $http.get(`/api/randomPhotos`);
+        const getPhotoUrlsByTime = function(page) {
+            return $http.get(`/api/randomPhotos?page=${page}`);
         };
 
         const getCommentsById = function(photoid) {

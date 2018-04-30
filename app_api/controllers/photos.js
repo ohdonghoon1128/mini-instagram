@@ -57,6 +57,10 @@ const listByLikes = function(req, res) {
 
 
 const listByTime = function(req, res) {
+    const PHOTO_PER_PAGE = 9;
+    let page = parseInt(req.query.page, 10);
+    page = page > 0 ? page : 0;
+
     Photo
         .find({})
         .select('-data')
@@ -67,29 +71,29 @@ const listByTime = function(req, res) {
         })
         .exec((err, photos) => {
             if(err) {
-                console.log('error herer?');
                 return res.status(404).json({
                     name: err.name,
                     message: err.message
                 });
             }
-
             photos = photos.filter((photo) => {
                 return photo.owner && !photo.owner.isPrivate;
-            }).map((photo) => {
-                return {
-                    name: photo.name,
-                    ownerid: photo.owner.userid,
-                    photoid: photo._id.toString(),
-                    url: PHOTO_API_URL + photo._id.toString()
-                };
             });
+            const isLastPage = PHOTO_PER_PAGE*(page + 1) >= photos.length;
 
-            res.status(200).json(photos.slice(0, 20));
+            photos = photos
+                        .reverse()
+                        .slice((PHOTO_PER_PAGE*page), PHOTO_PER_PAGE*(page + 1))
+                        .map((photo) => {
+                            return {
+                                name: photo.name,
+                                ownerid: photo.owner.userid,
+                                photoid: photo._id.toString(),
+                                url: PHOTO_API_URL + photo._id.toString()
+                            };
+                        });
 
-            //Delete this later =============================
-            console.log(photos.slice(0, 20));
-            //Delete this later =============================
+            res.status(200).json({photoInfos: photos, isLastPage: isLastPage});
         });
 };
 
@@ -100,6 +104,10 @@ const listByOwner = function(req, res) {
             message: 'ownerid query required'
         });
     }
+
+    const PHOTO_PER_PAGE = 9;
+    let page = parseInt(req.query.page, 10);
+    page = page > 0 ? page : 0;
 
     User
         .findOne({userid: ownerid})
@@ -133,19 +141,23 @@ const listByOwner = function(req, res) {
                         });
                     }
 
+                    const isLastPage = PHOTO_PER_PAGE*(page + 1) >= photos.length;
                     const photoInfos = [];
-                    photos.forEach((photo) => {
-                        photoInfos.push({
-                            ownerid: user.userid,
-                            name: photo.name,
-                            photoid: photo._id.toString(),
-                            url: PHOTO_API_URL + photo._id.toString(),
+                    photos
+                        .reverse()
+                        .slice((PHOTO_PER_PAGE*page), PHOTO_PER_PAGE*(page + 1))
+                        .forEach((photo) => {
+                            photoInfos.push({
+                                ownerid: user.userid,
+                                name: photo.name,
+                                photoid: photo._id.toString(),
+                                url: PHOTO_API_URL + photo._id.toString(),
+                            });
                         });
-                    });
 
-                    res.status(200).json(photoInfos);
+                    res.status(200).json({photoInfos: photoInfos, isLastPage: isLastPage});
                     //Delete this later =============================
-                    console.log(photoInfos);
+                    console.log({photoInfos: photoInfos, isLastPage: isLastPage});
                     //Delete this later =============================
                 });
         });
