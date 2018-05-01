@@ -14,16 +14,22 @@
 				</div>
 				<div class="col-xs-12 col-sm-3">
 					<div class="row">
-						<div>
-							<textarea id="comment" maxlength="50" ng-model="vm.sendingData.comment"></textarea>
+						<div class="col-xs-12">
+							<div>
+								<textarea id="comment" maxlength="50" ng-model="vm.sendingData.comment"></textarea>
+							</div>
 						</div>
-						<button type="button" class="btn btn-primary" ng-click="vm.addComment()">Send comment</button>
+						<div class="col-xs-12">
+							<button type="button" class="btn btn-primary" ng-click="vm.addComment()">Send comment</button>
+						</div>
 					</div>
 					&nbsp;
 					<div class="row comments">
 						<div class="col-xs-12">
 							<div class="row" ng-repeat="comment in vm.receivedData.comments">
-								<a href="/#!/user/{{comment.author}}">{{comment.author}}</a> {{comment.comment}}
+								<div class="col-xs-12">
+									<a href="/#!/user/{{comment.author}}">{{comment.author}}</a> {{comment.comment}}
+								</div>
 							</div>
 						</div>
 					</div>

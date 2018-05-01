@@ -36,16 +36,10 @@ try {
         fs.readFileSync('public/app_client/common/services/authentication.service.js', 'utf8'),
         fs.readFileSync('public/app_client/common/services/photoData.service.js', 'utf8'),
         fs.readFileSync('public/app_client/common/services/userData.service.js', 'utf8')
-        //fs.readFileSync('public/app_client/', 'utf8'),
-        //fs.readFileSync('public/app_client/', 'utf8'),
-        //fs.readFileSync('public/app_client/', 'utf8'),
-        //fs.readFileSync('public/app_client/app.js', 'utf8'),
     ];
-
 
     const uglified = uglifyEs.minify(appClientFiles, {compress: false});
     fs.writeFileSync('public/angular/mini-instagram.min.js', uglified.code);
-    console.log(uglified);
 } catch(e) {
     console.log(e);
     process.exit(1);
@@ -102,3 +96,11 @@ https.createServer(options, app).listen(app.get('port'), () => {
     console.log('instagram server is running on port ' + app.get('port'));
 });
 
+/*
+    I didn't pay for my public and private key, so browser will warn my site being dangerous.
+    so, http is just for a recruiter who might be scared of unregistered certificate warning
+*/
+const http = require('http');
+http.createServer(app).listen(3002, () => {
+    console.log('http:3002');
+});

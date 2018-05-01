@@ -11,11 +11,6 @@
         vm.isLoggedIn = authentication.isLoggedIn();
 
         vm.userid = $routeParams.userid;
-/*
-        vm.profile = {
-            userid = $routeParams.userid,
-        };
-*/
 
         if(vm.isLoggedIn) {
             vm.popupUpload = upload;

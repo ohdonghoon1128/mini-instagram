@@ -7,8 +7,6 @@
     function uploadPhotoModalCtrl($scope, authentication, Upload, $uibModalInstance) {
         const vm = this;
 
-console.log('photo modal are your executing?');
-
         vm.submit = function() {
             if($scope.form.file.$valid && $scope.file) {
                 submit($scope.file);

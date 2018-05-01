@@ -33,16 +33,6 @@ router.use((req, res, next) => {
 });
 
 
-/*
-//user handlers
-router.get('/users', ctrlUser.listUsers);
-router.post('/users/:userid', ctrlUser.createOne);
-router.get('/users/:userid', ctrlUser.readOne);
-router.put('/users/:userid', ctrlUser.updateOne);
-router.delete('/users/:userid', ctrlUser.deleteOne);
-*/
-
-
 
 //photo route handler
 router.get('/randomPhotos', ctrlPhoto.listByTime);

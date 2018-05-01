@@ -6,56 +6,6 @@ const fs = require('fs');
 
 const PHOTO_API_URL = 'https://localhost:3001/api/photo/';
 
-const accessLevel = {
-    OWNER: 0,
-    FRIENDS: 1,
-    OTHERS: 2
-};
-
-/*
-const authorizedUser = function(req, res, photo) {
-    Photo.findById(photoid)
-        .select('ownerid')
-        .exec((err, photo) => {
-            if(photo.ownerid.equals(userid) && accessLevel.OWNER <= accessLevel) {
-                return true
-            }
-            
-        });
-};
-
-Photo
-    .findById(photoid)
-    .populate('ownerid', 'followersAcceptList')
-    .exec((err, photo) => {
-        if(err) {
-        } else if(!photo) {
-        }
-
-        if(photo.ownerid._id
-    });
-
-*/
-
-/*
-const listByLikes = function(req, res) {
-    Photo
-        .find()
-        .populate({
-            path: 'owner',
-            match: {isPrivate: false},
-            select: '_id',
-        })
-        .limit(30)
-        .sort('likes')
-        .select('_id')
-        .exec((err, photos) => {
-        
-        });
-};
-*/
-
-
 const listByTime = function(req, res) {
     const PHOTO_PER_PAGE = 9;
     let page = parseInt(req.query.page, 10);
@@ -156,9 +106,6 @@ const listByOwner = function(req, res) {
                         });
 
                     res.status(200).json({photoInfos: photoInfos, isLastPage: isLastPage});
-                    //Delete this later =============================
-                    console.log({photoInfos: photoInfos, isLastPage: isLastPage});
-                    //Delete this later =============================
                 });
         });
 };
@@ -187,7 +134,6 @@ const createOne = function(req, res) {
                 });
             }
 
-console.log(req.body);
             //if user account exist, then save the photo to database
             const form = new formidable.IncomingForm();
             //**************************************************************************************
@@ -196,14 +142,6 @@ console.log(req.body);
             form.maxFieldsSize = 1 * 1024 * 1024; // Allow 1 mega byte fields size
             form.maxFileSize = 14 * 1024 * 1024; // Allow 14 mega byte image size
             form.parse(req, (err, fields, files) => {
-
-console.log(req.body);
-console.log(fields);
-console.log('==========================');
-console.log(files);
-console.log('==========================');
-
-
                 if(err) {
                     return res.status(404).json({
                         name: err.name,
@@ -214,13 +152,6 @@ console.log('==========================');
                         message: 'please upload photo'
                     });
                 }
-
-console.log(req.payload);
-console.log('=========received fields:');
-console.log(fields);
-console.log('===========received files:');
-console.log(files);
-console.log('========================');
 
                 fs.readFile(files.photo.path, (err, data) => {
                     if(err) {
@@ -278,8 +209,6 @@ const readOne = function(req, res) {
                 })
             }
             if(owner._id.toString() !== req.payload._id && owner.isPrivate /*&& !owner.followersAcceptList.id(req.payload._id)*/) {
-console.log('the owner of photo info: ' + owner._id.toString());
-console.log('my info: ' + req.payload);
                 return res.status(404).json({
                     message: 'Unauthorized User Error'
                 });
@@ -287,72 +216,6 @@ console.log('my info: ' + req.payload);
 
             res.status(200).contentType(photo.contentType).send(photo.data);
         });
-
-
-/*
-    User.findOne({userid: 'qwer'}).exec((err, user) => {
-        Photo.findOne({owner: user._id}).exec((err, photo) => {
-            if(err) {
-                return res.status(404).json(err);
-            }
-            res.status(200).contentType(photo.img.contentType).send(photo.img.data);
-
-    console.log(photo.img.contentType);
-
-            console.log(photo);
-        });
-    });
-
-User.findOne({userid: 'qwer'}).exec((err, user) => {
-    res.status(200).json({token: user.generateJwt()});
-});
-
-    Photo.findById(req.params.photoid)
-        .exec((err, photo) => {
-            if(err) {
-                return res.status(404).json({
-                    name: err.name,
-                    message: err.message
-                });
-            }
-
-            res.status(200).contentType(photo.img.contentType).send(photo.data);
-        });
-
-Photo.findById(req.params.photoid)
-    .exec((err, photo) => {
-        if(err) {
-            return res.status(404).json({
-                name: err.name,
-                message: err.message
-            });
-        }
-
-if(!req.payload) {
-    return res.status(404).json({message: 'no token'});
-}
-
-        User.findOne({userid: req.payload.userid})
-            .exec((err, user) => {
-
-                if(err) {
-                    return res.status(404).json({
-                        name: err.name,
-                        message: err.message
-                    });
-                }
-console.log(photo.owner);
-console.log(user._id);
-
-
-                if(!photo.owner.equals(user._id)) {
-                    return res.status(404).json({message: 'unauthorized user'});
-                } else {
-                    res.status(200).contentType(photo.img.contentType).send(photo.img.data);
-                }
-            });
-    });
-*/
 };
 
 // this functionality is disabled

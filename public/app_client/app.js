@@ -24,12 +24,6 @@
                 controller: 'homeCtrl',
                 controllerAs: 'vm'
             })
-            /*
-            .when('/', {
-                templateUrl: '',
-                controller: '',
-                controllerAs: 'vm'
-            })*/
             .otherwise({redirectTo: '/'});
 
     }

@@ -5,12 +5,6 @@
 
     photoData.$inject = ['$http', 'authentication', 'Upload'];
     function photoData($http, authentication, Upload) {
-        /* I will use ng-file-upload, so we dont need this
-        const addPhoto = function() {
-            return $http.post(``, something);
-        };
-        */
-
         const deletePhotoById = function(photoid) {
             return $http.delete(`/api/photo/${photoid}`, {
                 headers: {
@@ -18,12 +12,6 @@
                 }
             });
         };
-
-        /*
-        const getPhoto = function(photoid) {
-            return $http.get(`/api/photo/${photoid}`);
-        };
-        */
 
         const getPhotoUrlsByUserId = function(owner, page) {
             return $http.get(`/api/photo?ownerid=${owner}&page=${page}`, {

@@ -15,25 +15,22 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    followersReqQ: {
-        //change to mongoose.Schema.Types.ObjectId later
-        type: [String]
-    },
-    followersDenyList: {
-        //change to mongoose.Schema.Types.ObjectId later
-        type: [String]
-    },
-    followersAcceptList: {
-        //change to mongoose.Schema.Types.ObjectId later
-        type: [String]
-    },
-    /*
-    followsReqQ: {
-        type: [String]
-    },*/
-    following: {
-        type: [String]
-    },
+    followersReqQ: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    followersDenyList: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    followersAcceptList: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     isPrivate: {
         type: Boolean,
         default: false

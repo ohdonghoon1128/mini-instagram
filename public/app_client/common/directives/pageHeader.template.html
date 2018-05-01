@@ -18,17 +18,16 @@
 						<div class="col-xs-12 col-sm-10">
 							<div class="row">
 								<div class="col-xs-12">
-									<strong>{{phvm.data.name}}</strong>
-									
 									<span ng-show="phvm.data.userid === phvm.currentUser.userid">
 										<button type="button" ng-click="phvm.popupUpload()" class="btn btn-primary"><strong>post picture</strong></button>
 									</span>
+									<strong id="pageHeaderUserName">{{phvm.data.name}}</strong>
 									<!--span ng-show="phvm.data.userid !== phvm.currentUser.userid">
 										<span ng-show="phvm.isLoggedIn">
 											<button type="button" class="btn btn-primary"><strong>follow</strong></button>
 										</span>
 									</span-->
-									<div>
+									<div id="pageHeaderUserDesc">
 										{{phvm.data.description}}
 									</div>
 								</div>
