@@ -50,7 +50,8 @@ pictures, delete pictures, leave comments and visiting other user's page.
 ## Issue
 - photos do not align well. because I do not have strong knowledge about front-end programming, I did not solve
 this problem
-- Image uploaded by iphone rotated left on a desktop computer, but if I look at the the website everything is OK
+- Image uploaded by iphone rotated left on a desktop computer, but if I look at the the website on iphone everything
+is OK
 
 ## Programming Challenge
 - After I implemented function for posting and deleting picture, I decided to moved on to follow-system.
