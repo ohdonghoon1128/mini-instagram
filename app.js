@@ -95,12 +95,3 @@ https.createServer(options, app).listen(app.get('port'), () => {
     console.log(app.get('env'));
     console.log('instagram server is running on port ' + app.get('port'));
 });
-
-/*
-    I didn't pay for my public and private key, so browser will warn my site being dangerous.
-    so, http is just for a recruiter who might be scared of unregistered certificate warning
-*/
-const http = require('http');
-http.createServer(app).listen(3002, () => {
-    console.log('http:3002');
-});

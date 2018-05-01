@@ -14,6 +14,7 @@ const listByTime = function(req, res) {
     Photo
         .find({})
         .select('-data')
+        .sort('-_id')
         .populate({
             path: 'owner',
             match: {isPrivate: false},
@@ -32,7 +33,6 @@ const listByTime = function(req, res) {
             const isLastPage = PHOTO_PER_PAGE*(page + 1) >= photos.length;
 
             photos = photos
-                        .reverse()
                         .slice((PHOTO_PER_PAGE*page), PHOTO_PER_PAGE*(page + 1))
                         .map((photo) => {
                             return {
@@ -83,6 +83,7 @@ const listByOwner = function(req, res) {
             Photo
                 .find({owner: user._id})
                 .select('_id name')
+                .sort('-_id')
                 .exec((err, photos) => {
                     if(err) {
                         return res.status(404).json({
@@ -94,7 +95,6 @@ const listByOwner = function(req, res) {
                     const isLastPage = PHOTO_PER_PAGE*(page + 1) >= photos.length;
                     const photoInfos = [];
                     photos
-                        .reverse()
                         .slice((PHOTO_PER_PAGE*page), PHOTO_PER_PAGE*(page + 1))
                         .forEach((photo) => {
                             photoInfos.push({
