@@ -1,10 +1,7 @@
 # Mini-Instagram
 
 ## Web site
-- https://54.149.173.4:3001
-- I did not paid for my public and private key certificate, so your browser will warn that my site is dangerous.
-However, whether you trust my site or not, you could just give false or fake information for registration. So
-there is nothing to worry about the warning sign and ignore it.
+- https://mini-instagram.com
 
 ## Team
 - Donghoon Oh
